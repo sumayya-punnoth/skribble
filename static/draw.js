@@ -19,13 +19,17 @@ function drawOn(){
 			context.lineTo(e.clientX, e.clientY);
 			context.stroke();
 		}
+		
 	};
 	
 	canvas.onmouseup = function () {
 		isDrawing = false;
 		context.closePath();
 	};
+	document.getElementById('clear').addEventListener('click', () => {
+		context.clearRect(0, 0, canvas.width, canvas.height);
 
+});
 }
 
 drawOn()
