@@ -36,8 +36,8 @@ async def main():
         connected_clients.add(websocket) # Add to connected clients
         await handle_client(websocket)  # Handle client in a separate coroutine
 
-    async with websockets.serve(handler, "", 8765):
-        print("WebSocket server started on ws://localhost:8765")
+    async with websockets.serve(handler, "192.168.10.169", 8765):
+        print("WebSocket server started on ws://192.168.10.169:8765")
         await asyncio.Future()  # Run forever
 
 asyncio.run(main())
