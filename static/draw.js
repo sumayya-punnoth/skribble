@@ -1,9 +1,11 @@
 
 document.write(8)
+var isDrawing=false;
 function drawOn(){
 	const canvas = document.getElementById("canvas");
 	const context = canvas.getContext("2d");
-	let isDrawing;
+	var startarr = [];
+	var endarr = [];
 	canvas.onmousedown = (e) => {
 		isDrawing = true;
 		context.beginPath();
@@ -11,25 +13,67 @@ function drawOn(){
 		context.strokeStyle = "Black";
 		context.lineJoin = "round";
 		context.lineCap = "round";
-		context.moveTo(e.clientX, e.clientY);
+		context.moveTo(e.offsetX, e.offsetY);
+		startarr[0] = e.offsetX;
+		startarr[1] = e.offsetY;
+		websocket.send(JSON.stringify(startarr));
 	};
 	
 	canvas.onmousemove = (e) => {
 		if (isDrawing) {
-			context.lineTo(e.clientX, e.clientY);
+			context.lineTo(e.offsetX, e.offsetY);
+			endarr[0] = e.offsetX;
+			endarr[1] = e.offsetY;
+			websocket.send(JSON.stringify(endarr));
 			context.stroke();
 		}
-		
 	};
 	
 	canvas.onmouseup = function () {
 		isDrawing = false;
 		context.closePath();
+		websocket.send(JSON.stringify(isDrawing));
 	};
-	document.getElementById('clear').addEventListener('click', () => {
-		context.clearRect(0, 0, canvas.width, canvas.height);
 
-});
+}
+console.log(isDrawing);
+function showOn() {
+	const screen = document.getElementById("screen");
+	const cont = screen.getContext("2d");
+	document.write(4);
+	var coordinates = [];
+	var startcoor = [];
+	document.write(3);
+	cont.beginPath();
+	cont.lineWidth = 10;
+	cont.strokeStyle = "Black";
+	cont.lineJoin = "round";
+	cont.lineCap = "round";
+	websocket.onmessage = function (event) {
+		startcoor = JSON.parse (event.data);
+		console.log("recieved"+startcoor)
+
+		cont.lineTo(startcoor[0], startcoor[1]);
+		cont.stroke();
+	}
+	document.write(4);
+	/*websocket.onmessage = function (event) {
+		var hi = JSON.parse (event.data);
+		console.log(hi)
+	}*/
+	//websocket.send(JSON.stringify(startcoor));
+	document.write(2);
+
+	/*else {
+		cont.closePath();
+	}*/
 }
 
-drawOn()
+/*function start () {
+	drawOn();
+	showOn();
+}*/
+const websocket = new WebSocket("ws://localhost:8765/");
+
+drawOn();
+showOn();
