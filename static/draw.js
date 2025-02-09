@@ -34,7 +34,9 @@ function drawOn(){
 		context.closePath();
 		websocket.send(JSON.stringify(isDrawing));
 	};
+    
 
+ 
 }
 console.log(isDrawing);
 function showOn() {
@@ -67,6 +69,9 @@ function showOn() {
 	/*else {
 		cont.closePath();
 	}*/
+	
+	
+   
 }
 
 /*function start () {

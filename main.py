@@ -1,6 +1,8 @@
 from flask import Flask
 from flask import render_template
 import random
+import request
+import url_for
 
 # creates a Flask application
 app = Flask(__name__)
@@ -8,11 +10,12 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-	return render_template('draw.html')
+	return render_template('login.html')
 
-@app.route("/this")
-def lmaoo():
-	return render_template('hello.html')
+@app.route('/submit',methods=['POST','GET'])
+def submit():
+    return render_template('draw.html')
+
 
 @app.route('/getwords',methods=['GET','POST'])
 def home():
