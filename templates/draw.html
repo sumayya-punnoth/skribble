@@ -1,31 +1,104 @@
 <!DOCTYPE html>
 <html>
-	<body>
-		<div>
-			<canvas
-				id="canvas"
-				width=500
-				height=500
-				style="border: 1px solid black;"
-			></canvas>
+    <div>
+        <canvas
+            id="canvas"
+            width=500
+            height=500
+            style="border: 1px solid black;"
+        ></canvas>
 
-		</div>
-		<div style="margin-top:5px">
-			<button id="clear">Clear</button>
-		</div>
-		<br />
-		<p>
-		draw bruuu
-		</p>
-		<div>
-			<canvas
-				id="screen"
-				width=500
-				height=500
-				style="border: 1px solid black
-			"></canvas>
-		</div>
-		<p id="demo"></p>
-		<script src="/static/draw.js"></script>
-	</body>
+    </div>
+    <div style="margin-top:5px">
+        <button id="clear">Clear</button>
+    </div>
+    <br />
+    <p>
+    draw bruuu
+    </p>
+    <div>
+        <canvas
+            id="screen"
+            width=500
+            height=500
+            style="border: 1px solid black
+        "></canvas>
+    </div>
+    <p id="demo"></p>
+    <script src="/static/draw.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatroom</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .chat-container {
+            width: 400px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .chat-box {
+            height: 300px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-message {
+            padding: 5px;
+            border-radius: 5px;
+        }
+        .chat-message:nth-child(even) {
+            background-color: #e6e6e6;
+        }
+        .chat-input {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-box" id="chatBox"></div>
+        <input type="text" id="messageInput" class="chat-input" placeholder="Type your guess" onkeypress="handleKeyPress(event)">
+    </div>
+
+    <script>
+        function sendMessage() {
+            let messageInput = document.getElementById("messageInput");
+            let chatBox = document.getElementById("chatBox");
+            
+            if (messageInput.value.trim() !== "") {
+                let message = document.createElement("div");
+                message.classList.add("chat-message");
+                message.textContent = messageInput.value;
+                chatBox.appendChild(message);
+                chatBox.scrollTop = chatBox.scrollHeight;
+                messageInput.value = "";
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
+    </script>
+    
+</body>
 </html>
+

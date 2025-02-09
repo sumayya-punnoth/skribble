@@ -1,8 +1,4 @@
-from flask import Flask
-from flask import render_template
-import random
-import request
-import url_for
+from flask import Flask,redirect,url_for, render_template,request
 
 # creates a Flask application
 app = Flask(__name__)
