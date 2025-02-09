@@ -1,5 +1,4 @@
 
-document.write(8)
 var isDrawing=false;
 function drawOn(){
 	const canvas = document.getElementById("canvas");
@@ -42,7 +41,6 @@ console.log(isDrawing);
 function showOn() {
 	const screen = document.getElementById("screen");
 	const cont = screen.getContext("2d");
-	document.write(4);
 	var coordinates = [];
 	var startcoor = [];
 	document.write(3);
@@ -58,26 +56,10 @@ function showOn() {
 		cont.lineTo(startcoor[0], startcoor[1]);
 		cont.stroke();
 	}
-	document.write(4);
-	/*websocket.onmessage = function (event) {
-		var hi = JSON.parse (event.data);
-		console.log(hi)
-	}*/
-	//websocket.send(JSON.stringify(startcoor));
-	document.write(2);
-
-	/*else {
-		cont.closePath();
-	}*/
-	
 	
    
 }
 
-/*function start () {
-	drawOn();
-	showOn();
-}*/
 const websocket = new WebSocket("ws://192.168.96.120:8765/");
 
 drawOn();

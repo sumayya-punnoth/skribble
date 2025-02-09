@@ -25,8 +25,10 @@ async def handle_client(websocket):
                 break
 
     finally:
+
         connected_clients.remove(websocket) # Clean up after client disconnects
         print(f"Connection closed for: {websocket.remote_address}")
+    
 
 connected_clients = set()
     
