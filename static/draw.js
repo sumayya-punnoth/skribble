@@ -78,7 +78,7 @@ function showOn() {
 	drawOn();
 	showOn();
 }*/
-const websocket = new WebSocket("ws://localhost:8765/");
+const websocket = new WebSocket("ws://192.168.10.169:8765/");
 
 drawOn();
 showOn();
