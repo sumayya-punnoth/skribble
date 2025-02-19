@@ -33,34 +33,72 @@ function drawOn(){
 		context.closePath();
 		websocket.send(JSON.stringify(isDrawing));
 	};
-    
 
- 
 }
-console.log(isDrawing);
 function showOn() {
 	const screen = document.getElementById("screen");
 	const cont = screen.getContext("2d");
 	var coordinates = [];
 	var startcoor = [];
-	document.write(3);
 	cont.beginPath();
 	cont.lineWidth = 10;
 	cont.strokeStyle = "Black";
 	cont.lineJoin = "round";
 	cont.lineCap = "round";
 	websocket.onmessage = function (event) {
-		startcoor = JSON.parse (event.data);
-		console.log("recieved"+startcoor)
+		var receivedData = JSON.parse (event.data);
+		if (Array.isArray(receivedData) || receivedData === false) {
+			if (receivedData !== false) {
+				startcoor = receivedData;
+				console.log("recieved"+startcoor)
 
-		cont.lineTo(startcoor[0], startcoor[1]);
-		cont.stroke();
-	}
-	
-   
+				cont.lineTo(startcoor[0], startcoor[1]);
+				cont.stroke();
+			}
+		}
+		else {
+			console.log(receivedData)
+			printMessage(receivedData);
+		}
+	}	
 }
 
-const websocket = new WebSocket("ws://192.168.96.120:8765/");
+const websocket = new WebSocket("ws://localhost:8765/");
+
+
+function sendMessage() {
+
+    let messageInput = document.getElementById("messageInput");
+    let chatBox = document.getElementById("chatBox");
+    
+    if (messageInput.value.trim() !== "") {
+        let message = document.createElement("div");
+
+	let messageText = messageInput.value;
+	const data = {type: "chat", message: messageText};
+	websocket.send(JSON.stringify(data));
+        message.classList.add("chat-message");
+        message.textContent = messageInput.value;
+        chatBox.appendChild(message);
+        chatBox.scrollTop = chatBox.scrollHeight;
+        messageInput.value = "";
+    }
+}
+
+function printMessage(receivedData) {
+	let chatBox = document.getElementById("chatBox");
+        let message = document.createElement("div");
+        message.classList.add("chat-message");
+        message.textContent = receivedData.message;
+        chatBox.appendChild(message);
+        chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function handleKeyPress(event) {
+    if (event.key === "Enter") {
+        sendMessage();
+    }
+}
 
 drawOn();
 showOn();
